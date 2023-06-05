@@ -1,11 +1,23 @@
-FROM python:3.7.11-slim
+FROM sequenceiq/spark:1.6.0
+MAINTAINER SequenceIQ
 
-WORKDIR  /python-api
+RUN mkdir /conf
+ENV YARN_CONF_DIR=/conf
+# in bootstrap conf is filled with hdfs/yarn/spark config files
+ENV HADOOP_CONF_DIR=/app/conf
+ENV YARN_CONF_DIR=/app/conf
+ENV SPARK_CONF_DIR=/app/conf
 
-COPY requirements.txt requirements.txt
+RUN yum -y install python-pip
+
+ADD . /app
+COPY . . /app
+
+WORKDIR /app
 
 RUN pip install -r requirements.txt
 
-COPY . .
+ENV FLASK_PORT=8080
+EXPOSE 8080
 
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+ENTRYPOINT ["spark-submit", "--master", "yarn", "--deploy-mode", "client", "--proxy-user", "shelly", "--packages", "com.databricks:spark-csv_2.10:1.4.0", "app.py"]

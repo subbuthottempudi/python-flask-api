@@ -1,14 +1,28 @@
-import http.client
+import unittest
+import os
+from flask import Flask, jsonify, abort, request
+import flaskapi
+import requests
 import json
+import sys
+
+class TestFlaskApiUsingRequests(unittest.TestCase):
+    def test_hello_world(self):
+        response = requests.get('http://localhost:8080')
+        self.assertEqual(response.json(), {'hello': 'test'})
 
 
-conn = http.client.HTTPConnection("127.0.0.1:5010")
+class TestFlaskApi(unittest.TestCase):
+    def setUp(self):
+        self.app = flaskapi.app.test_client()
 
-payload = ""
+    def test_hello_world(self):
+        response = self.app.get('/')
+        self.assertEqual(
+            json.loads(response.get_data().decode(sys.getdefaultencoding())), 
+            {'hello': 'world'}
+        )
 
-conn.request("GET", "/api/p1/admin:passwd/127.0.0.1", payload)
 
-res = conn.getresponse()
-data = res.read()
-final = json.loads(data)
-print(final)
+if __name__ == "__main__":
+    unittest.main()

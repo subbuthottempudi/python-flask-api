@@ -1,0 +1,22 @@
+Example output:
+
+http://127.0.0.1:8080/query-rolling_five_days?countryterritoryCode=AUT
+
+rolling_five_days:
+
+dateRep,day,month,year,cases,deaths,countriesAndTerritories,geoId,countryterritoryCode,popData2020,continentExp
+23/10/2022,23,10,2022,3557,0,Austria,AT,AUT,8901064,Europe
+22/10/2022,22,10,2022,5494,4,Austria,AT,AUT,8901064,Europe
+21/10/2022,21,10,2022,7776,4,Austria,AT,AUT,8901064,Europe
+20/10/2022,20,10,2022,8221,6,Austria,AT,AUT,8901064,Europe
+19/10/2022,19,10,2022,10007,8,Austria,AT,AUT,8901064,Europe
+
+
+Tota_data:
+
+countriesAndTerritories, total_covid_cases 
+Austria,100000
+Belgium,20000
+India,30000
+Germany,40000
+

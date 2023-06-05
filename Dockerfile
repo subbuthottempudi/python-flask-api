@@ -3,7 +3,6 @@ MAINTAINER SequenceIQ
 
 RUN mkdir /conf
 ENV YARN_CONF_DIR=/conf
-# in bootstrap conf is filled with hdfs/yarn/spark config files
 ENV HADOOP_CONF_DIR=/app/conf
 ENV YARN_CONF_DIR=/app/conf
 ENV SPARK_CONF_DIR=/app/conf

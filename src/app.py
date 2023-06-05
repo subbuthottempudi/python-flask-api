@@ -4,7 +4,7 @@ from pyspark import SparkContext, SparkConf
 from pyspark.sql import SQLContext
 import logging
 
-
+#For Testing
 data = [
     {
           "dateRep" : "23/10/2022",
@@ -65,13 +65,12 @@ csv_file = '/input/data.csv'
 
 df = spark.read.options(header='true', inferschema='true').csv(csv_file)
 
-
+#testing
 @app.route("/", methods=["GET"])
 def get_days():
     return jsonify(data)
 
 @app.route('/rolling_five_days', methods=["GET"])
-
 def rolling_five_days():
     
     country_Code = request.args.get('countryterritoryCode')
@@ -81,8 +80,11 @@ def rolling_five_days():
         df.createOrReplaceTempView("Coviddata")
         logging.info('Creating temp table Coviddata on DF inside rolling_five_days')
 
-        result = spark.sql(""" SELECT * FROM Coviddata 
+        result = spark.sql(""" SELECT dateRep,day,month,year,cases,deaths,countriesAndTerritories,geoId,countryterritoryCode,popData2020,continentExp FROM Coviddata 
           WHERE countryterritoryCode = {country_Code} order by dateRep DESC LIMIT 5 """)
+        
+        #result = spark.sql(""" SELECT * FROM Coviddata 
+        #WHERE countryterritoryCode = {country_Code} order by dateRep DESC LIMIT 5 """)
         
         logging.info('Getting data from temp table Coviddata by passing country_Code')
 
